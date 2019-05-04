@@ -120,7 +120,7 @@ export default class SettingsScreen extends React.Component {
   };
 
   _handleGitButtonPressAsync = async () => {
-    this._accessWebpage("https://expo.io");
+    this._accessWebpage("https://github.com/jguipi/word_seeker");
   };
 
   _handleForShopifyButtonPressAsync = async () => {
