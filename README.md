@@ -51,6 +51,8 @@ This README file will guide you through simple steps to help you start this app.
 - [x] Sound on key press
 - [ ] Restart current game 
 - [ ] Change level
+- [x] Invite a friend by sms
+
 
 
 ### Usefull VS code plugins
