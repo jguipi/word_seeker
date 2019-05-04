@@ -31,7 +31,7 @@ This README file will guide you through simple steps to help you start this app.
 ### Development language and framework
 - JavaScript 
 - Node JS
-- React
+- React native
 
 ### Librarie
 
@@ -40,12 +40,15 @@ This README file will guide you through simple steps to help you start this app.
 
 ## More 
 
-### Learn and More
-- [Welcome to React!](https://reactjs.org/docs/hello-world.html)
-- [NextJS](https://nextjs.org/learn/basics/getting-started)
+### Functionality and more
 
-### Google Drive
-- None
+- [x] Onboarding screen
+- [x] Language change
+- [ ] Game played count
+- [x] Navigation with gesture
+- [x] Sound on key press
+- [ ] Restart current game 
+- [ ] Change level
 
 
 ### Usefull VS code plugins
