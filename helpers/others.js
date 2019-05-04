@@ -5,7 +5,7 @@ export async function sendSMS() {
   if (isAvailable) {
     await SMS.sendSMSAsync(
       ["Add a number"],
-      "Hey try Word seeker it is amazing"
+      "Hey try Word seeker it is amazing https://github.com/jguipi/word_seeker"
     );
   }
 }

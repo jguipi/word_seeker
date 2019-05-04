@@ -2,21 +2,22 @@ import React from "react";
 import {
   Platform,
   StyleSheet,
-  Text,
   View,
   FlatList,
   Dimensions,
   TouchableHighlight
 } from "react-native";
 import { first_data_grid, word_to_found } from "../constants/GameDataGrid";
-import { Button, TextField, FloatingActionButton } from "../components/Index";
+import { TextField, FloatingActionButton } from "../components/Index";
 import themeColor from "../constants/Colors";
 import i18n from "../helpers/i18n";
 import { playSoundAsync } from "../helpers/sounds";
 import { strCompare, generateWord } from "../helpers/strOperation";
 import { LinearGradient, WebBrowser } from "expo";
+import { DangerZone } from "expo";
+let { Lottie } = DangerZone;
 
-const numColumns = 10;
+const COLUMN_NUMBER = 10;
 const dataArray = new Array(100);
 
 class HomeScreen extends React.Component {
@@ -34,9 +35,11 @@ class HomeScreen extends React.Component {
   };
 
   state = {
+    currentGameGrid: first_data_grid,
     wordToFound: word_to_found,
     remainingWord: 6,
-    selectedLetter: []
+    selectedLetter: [],
+    animation: null
   };
 
   render() {
@@ -45,25 +48,9 @@ class HomeScreen extends React.Component {
         colors={[themeColor.secondaryColor, themeColor.lighterSecondary]}
         style={styles.container}
       >
-        <View
-          style={{
-            flex: 0.55,
-            flexDirection: "row",
-            backgroundColor: themeColor.lightSecondary
-          }}
-        >
-          <View
-            style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
-          >
-            <View
-              style={{
-                width: 150,
-                height: 50,
-                backgroundColor: themeColor.secondaryColor,
-                borderRadius: 10,
-                marginTop: 15.5
-              }}
-            >
+        <View style={styles.rowContainer}>
+          <View style={styles.rowSubContainer}>
+            <View style={styles.remainingWordContainer}>
               <TextField style={{ color: "white" }}>
                 {i18n.t("home_remaining_word")}
               </TextField>
@@ -74,16 +61,27 @@ class HomeScreen extends React.Component {
           </View>
         </View>
         <FlatList
-          data={first_data_grid}
+          data={this.state.currentGameGrid}
           style={styles.flatListcontainer}
           renderItem={this._renderItem}
-          numColumns={numColumns}
+          numColumns={COLUMN_NUMBER}
           keyExtractor={this._keyExtractor}
           scrollEnabled={false}
           extraData={this.state.selectedLetter}
         />
 
         <FloatingActionButton {...this.props} />
+        <View style={styles.animationContainer}>
+          {this.state.animation && (
+            <Lottie
+              ref={animation => {
+                this.animation = animation;
+              }}
+              style={styles.animationDimension}
+              source={this.state.animation}
+            />
+          )}
+        </View>
       </LinearGradient>
     );
   }
@@ -98,7 +96,7 @@ class HomeScreen extends React.Component {
           key={index}
           onPress={() => this._onGridGamePress(item, index)}
         >
-          <Text style={styles.itemText}>{item.key}</Text>
+          <TextField style={styles.itemText}>{item.key}</TextField>
         </TouchableHighlight>
       );
     }
@@ -128,17 +126,55 @@ class HomeScreen extends React.Component {
   };
 
   _updateRemainingWordCount = wordFound => {
-    this.setState(prevState => ({
-      remainingWord: 6 - wordFound
-    }));
+    if (this.state.remainingWord > 0) {
+      this.setState(
+        prevState => ({
+          remainingWord: 6 - wordFound
+        }),
+        () => {
+          if (this.state.remainingWord === 0) {
+            this.setState({ remainingWord: 6 });
+            // dataArray = new Array(100);
+            this._playAnimation();
+          }
+        }
+      );
+    }
   };
 
   _keyExtractor = (item, index) => index;
+
+  _playAnimation = () => {
+    if (!this.state.animation) {
+      this._loadAnimationAsync();
+    } else {
+      this.animation.reset();
+      this.animation.play();
+      setTimeout(() => this.setState({ animation: null }), 4000);
+    }
+  };
+
+  _loadAnimationAsync = async () => {
+    this.setState(
+      { animation: require("../assets/animations/animation.json") },
+      this._playAnimation
+    );
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  rowSubContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  rowContainer: {
+    flex: 0.55,
+    flexDirection: "row",
+    backgroundColor: themeColor.lightSecondary
   },
   gameGridcontainer: {
     flex: 1
@@ -150,7 +186,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     margin: 1,
-    height: Dimensions.get("window").width / numColumns // approximate a square
+    height: Dimensions.get("window").width / COLUMN_NUMBER // approximate a square
+  },
+  animationDimension: {
+    width: 200,
+    height: 200
   },
   selectedItem: {
     backgroundColor: "#B1C5A9",
@@ -158,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     margin: 1,
-    height: Dimensions.get("window").width / numColumns // approximate a square
+    height: Dimensions.get("window").width / COLUMN_NUMBER // approximate a square
   },
   itemInvisible: {
     backgroundColor: "transparent"
@@ -205,6 +245,19 @@ const styles = StyleSheet.create({
   },
   navigationFilename: {
     marginTop: 5
+  },
+  remainingWordContainer: {
+    width: 150,
+    height: 50,
+    backgroundColor: themeColor.secondaryColor,
+    borderRadius: 10,
+    marginTop: 15.5
+  },
+  animationContainer: {
+    position: "absolute",
+    left: 110,
+    right: 0,
+    bottom: 25
   }
 });
 
