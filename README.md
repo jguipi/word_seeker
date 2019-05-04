@@ -43,6 +43,7 @@ This README file will guide you through simple steps to help you start this app.
 ### Functionality and more
 
 - [x] Onboarding screen
+- [x] Phone current language detection
 - [x] Language change
 - [ ] Game played count
 - [x] Navigation with gesture
