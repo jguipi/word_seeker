@@ -45,6 +45,7 @@ This README file will guide you through simple steps to help you start this app.
 - [x] Onboarding screen
 - [x] Phone current language detection
 - [x] Language change
+- [x] Animation on victory
 - [ ] Game played count
 - [x] Navigation with gesture
 - [x] Sound on key press
