@@ -1,5 +1,11 @@
 # Word seeker
 
+<p float="left">
+  <img src="https://github.com/jguipi/word_seeker/blob/master/exemples/exemple_1.png" width="250" />
+  <img src="https://github.com/jguipi/word_seeker/blob/master/exemples/exemple_2.png" width="250" /> 
+  <img src="https://github.com/jguipi/word_seeker/blob/master/exemples/exemple_3.png" width="250" />
+</p>
+
 ## Getting started
 
 ### Introduction 
