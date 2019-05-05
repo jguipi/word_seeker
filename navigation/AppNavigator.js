@@ -15,7 +15,7 @@ const RootNavigation = createSwitchNavigator({
 
 export default createAppContainer(
   createSwitchNavigator({
-    Main: RootNavigation,
-    Onboarding: OnboardingScreen
+    Onboarding: OnboardingScreen,
+    Main: RootNavigation
   })
 );
