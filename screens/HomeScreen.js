@@ -58,7 +58,6 @@ class HomeScreen extends React.Component {
           scrollEnabled={false}
           extraData={this.state.selectedLetter}
         />
-
         <FloatingActionButton
           {...this.props}
           reloadDataGrid={() => this._reloadDataGrid()}

@@ -48,11 +48,11 @@ export const fr = {
   //onboarfinng
   continue: "Continuer",
   skip: "Passer",
-  welcome:"Bienvenue au jeu Word seeker",
-  info_text:"Afin de gagner, trouvé chaque mot de la grille. (swift, kotlin, objectivec, variable, java, mobile). Assurez-vous que l\'ordre de sélection est correct!",
+  welcome:"Bienvenue dans Word seeker",
+  info_text:"Afin de gagner, trouver chaque mot de la grille. (swift, kotlin, objectivec, variable, java, mobile). Assurez-vous que l\'ordre de sélection est correct de la première à la dernière lettre.",
   info_text_2:"Ce bouton relancera le niveau",
   info_text_3:"Ce bouton chargera le prochain niveau",
-  info_text_4: "Ce bouton vous fera revenir ici pour information",
+  info_text_4: "Ce bouton vous fera revenir ici pour de l'information",
   info_text_5: "Ce bouton vous fera accéder à la page de configuration",
   info_text_6: "Bonne chance ! :)"
 
