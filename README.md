@@ -32,6 +32,12 @@ This README file will guide you through simple steps to help you start this app.
  
  7- Enjoy 😊!
  
+ ### Test the app without the installation
+ 
+ 1- Download the Expo mobile app in the [store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
+ 
+ 2- Contact me so I'll be able to send you an invitation by phone number or by email
+ 
 ## Info 
 
 ### Development language and framework
