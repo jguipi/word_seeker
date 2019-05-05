@@ -24,8 +24,8 @@ export const en = {
   info_text_3:"This button will load the next level",
   info_text_4: "This button will make you come back here for information",
   info_text_5: "This button will make you access the setting page",
-  info_text_6: "Good Luck ! :)"
-
+  info_text_6: "Good Luck ! :)",
+  info_text_7: "Use the button to navigate through the app"
 };
 
 export const fr = {
@@ -54,6 +54,7 @@ export const fr = {
   info_text_3:"Ce bouton chargera le prochain niveau",
   info_text_4: "Ce bouton vous fera revenir ici pour de l'information",
   info_text_5: "Ce bouton vous fera accéder à la page de configuration",
-  info_text_6: "Bonne chance ! :)"
+  info_text_6: "Bonne chance ! :)",
+  info_text_7: "Utilisez les boutons pour naviguer dans l'application"
 
 };

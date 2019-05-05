@@ -122,7 +122,7 @@ class OnboardingScreen extends Component {
         return (
           <OnboardingCard
             key={index}
-            text="Use the button to navigate through the app"
+            text={i18n.t("info_text_7")}
             {...this.props}
           >
             <MaterialIcons name="replay" style={styles.actionButtonIcon} />
