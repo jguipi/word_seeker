@@ -69,7 +69,6 @@ This README file will guide you through simple steps to help you start this app.
 - jsx
 - npm
 - npm intellisense
-- React redux Es6 snippet
 - React-Native/React/ Redux snippets for es6/es7
 - React/Redux/ React-router snippets
 - Reactjs snippets
