@@ -26,9 +26,9 @@ This README file will guide you through simple steps to help you start this app.
  
  4- Create an [expo account](https://expo.io/signup)
  
- 5- Download the Expo mobile app on the [store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
+ 5- Download the Expo mobile app in the [store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8) and log into your account
  
- 6- Log into you account then in your project root run `expo start --tunnel`
+ 6- In your project root run `expo start --tunnel` then you should be able to launch your app in the expo mobile app.
  
  7- Enjoy 😊!
  
@@ -52,11 +52,11 @@ This README file will guide you through simple steps to help you start this app.
 - [x] Phone current language detection
 - [x] Language change
 - [x] Animation on victory
-- [ ] Game played count
+- [x] Game played count
 - [x] Navigation with gesture
 - [x] Sound on key press
-- [ ] Restart current game 
-- [ ] Change level
+- [x] Restart current game 
+- [x] Change level
 - [x] Invite a friend by sms
 
 
