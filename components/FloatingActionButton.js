@@ -4,7 +4,7 @@ import ActionButton from "react-native-circular-action-menu";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import themeColor from "../constants/Colors";
 
-const FloatingActionButton = (props) => {
+const FloatingActionButton = ({changeDataGrid, ...props}) => {
   const {navigate} = props.navigation
     return (
       <View style={styles.container}>
@@ -12,7 +12,7 @@ const FloatingActionButton = (props) => {
           <ActionButton.Item buttonColor={themeColor.fifthColor} title="Notifications" onPress={() => {}}>
             <MaterialIcons name="replay" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor={themeColor.fifthColor} title="Notifications" onPress={() => {}}>
+          <ActionButton.Item buttonColor={themeColor.fifthColor} title="Notifications" onPress={() => changeDataGrid()}>
             <MaterialIcons name="skip-next" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor={themeColor.fifthColor} title="Notifications" onPress={() => navigate("Onboarding")}>

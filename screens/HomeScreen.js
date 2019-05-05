@@ -7,7 +7,11 @@ import {
   Dimensions,
   TouchableHighlight
 } from "react-native";
-import { first_data_grid, word_to_found } from "../constants/GameDataGrid";
+import {
+  first_data_grid,
+  second_data_grid,
+  word_to_found
+} from "../constants/GameDataGrid";
 import { TextField, FloatingActionButton } from "../components/Index";
 import themeColor from "../constants/Colors";
 import i18n from "../helpers/i18n";
@@ -18,7 +22,7 @@ import { DangerZone } from "expo";
 let { Lottie } = DangerZone;
 
 const COLUMN_NUMBER = 10;
-const dataArray = new Array(100);
+var dataArray = new Array(100);
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -70,7 +74,10 @@ class HomeScreen extends React.Component {
           extraData={this.state.selectedLetter}
         />
 
-        <FloatingActionButton {...this.props} />
+        <FloatingActionButton
+          {...this.props}
+          changeDataGrid={() => this._changeDataGrid()}
+        />
         <View style={styles.animationContainer}>
           {this.state.animation && (
             <Lottie
@@ -117,7 +124,7 @@ class HomeScreen extends React.Component {
         selectedLetter: [...prevState.selectedLetter, itemDataObj]
       }),
       () => {
-        const { result, wordFound } = strCompare(
+        const { wordFound } = strCompare(
           generateWord(this.state.selectedLetter)
         );
         this._updateRemainingWordCount(wordFound);
@@ -126,20 +133,31 @@ class HomeScreen extends React.Component {
   };
 
   _updateRemainingWordCount = wordFound => {
-    if (this.state.remainingWord > 0) {
+    const { remainingWord } = this.state;
+    console.log(remainingWord);
+    if (remainingWord >= 0) {
       this.setState(
         prevState => ({
           remainingWord: 6 - wordFound
         }),
         () => {
           if (this.state.remainingWord === 0) {
-            this.setState({ remainingWord: 6 });
-            // dataArray = new Array(100);
+            dataArray = new Array(100);
             this._playAnimation();
+            // this._changeDataGrid();
           }
         }
       );
     }
+  };
+
+  _changeDataGrid = () => {
+    this.setState({
+      currentGameGrid:
+        this.state.currentGameGrid == first_data_grid
+          ? second_data_grid
+          : first_data_grid
+    });
   };
 
   _keyExtractor = (item, index) => index;
