@@ -34,9 +34,17 @@ This README file will guide you through simple steps to help you start this app.
  
  ### Test the app without the installation
  
+ #### Method A
+ 
  1- Download the Expo mobile app in the [store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
  
  2- Contact me so I'll be able to send you an invitation by phone number or by email
+ 
+  #### Method B
+  
+ 1- Download the Expo mobile app in the [store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
+
+ 2- Request a link [here](https://expo.io/@jguipi/word_search)
  
 ## Info 
 
