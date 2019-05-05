@@ -1,11 +1,4 @@
-export const word_to_found = [
-  "swift",
-  "kotlin",
-  "objectivec",
-  "variable",
-  "java",
-  "mobile"
-];
+export const word_to_found = ["swift", "kotlin", "objectivec", "variable", "java", "mobile"];
 
 export const first_data_grid = [
   { key: "z" },

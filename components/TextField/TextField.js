@@ -1,12 +1,8 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
- const TextField = ({...props}) => {
-  return (
-    <Text style={[styles.text, props.style] }>
-      {props.children}
-    </Text>
-  );
+const TextField = ({ ...props }) => {
+  return <Text style={[styles.text, props.style]}>{props.children}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -19,4 +15,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { TextField }
+export { TextField };

@@ -1,17 +1,6 @@
 import React from "react";
-import {
-  Platform,
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  TouchableHighlight
-} from "react-native";
-import {
-  first_data_grid,
-  second_data_grid,
-  word_to_found
-} from "../constants/GameDataGrid";
+import { Platform, StyleSheet, View, FlatList, Dimensions, TouchableHighlight } from "react-native";
+import { first_data_grid, second_data_grid } from "../constants/GameDataGrid";
 import { TextField, FloatingActionButton } from "../components/Index";
 import themeColor from "../constants/Colors";
 import i18n from "../helpers/i18n";
@@ -22,7 +11,13 @@ import { DangerZone } from "expo";
 let { Lottie } = DangerZone;
 
 const COLUMN_NUMBER = 10;
-var dataArray = new Array(100);
+var gameGridDatatArray = new Array(100);
+const INITIAL_STATE = {
+  currentGameGrid: first_data_grid,
+  remainingWord: 6,
+  selectedLetter: [],
+  animation: null
+};
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -31,20 +26,14 @@ class HomeScreen extends React.Component {
       headerStyle: {
         backgroundColor: themeColor.lightSecondary
       },
-      headerTintColor: "#fff",
+      headerTintColor: "white",
       headerTitleStyle: {
         fontWeight: "bold"
       }
     };
   };
 
-  state = {
-    currentGameGrid: first_data_grid,
-    wordToFound: word_to_found,
-    remainingWord: 6,
-    selectedLetter: [],
-    animation: null
-  };
+  state = INITIAL_STATE;
 
   render() {
     return (
@@ -55,12 +44,8 @@ class HomeScreen extends React.Component {
         <View style={styles.rowContainer}>
           <View style={styles.rowSubContainer}>
             <View style={styles.remainingWordContainer}>
-              <TextField style={{ color: "white" }}>
-                {i18n.t("home_remaining_word")}
-              </TextField>
-              <TextField style={{ color: "white" }}>
-                {this.state.remainingWord}
-              </TextField>
+              <TextField style={styles.textColor}>{i18n.t("home_remaining_word")}</TextField>
+              <TextField style={styles.textColor}>{this.state.remainingWord}</TextField>
             </View>
           </View>
         </View>
@@ -76,6 +61,7 @@ class HomeScreen extends React.Component {
 
         <FloatingActionButton
           {...this.props}
+          reloadDataGrid={() => this._reloadDataGrid()}
           changeDataGrid={() => this._changeDataGrid()}
         />
         <View style={styles.animationContainer}>
@@ -99,7 +85,7 @@ class HomeScreen extends React.Component {
     } else {
       return (
         <TouchableHighlight
-          style={dataArray[index] == 1 ? styles.selectedItem : styles.item}
+          style={gameGridDatatArray[index] == 1 ? styles.selectedItem : styles.item}
           key={index}
           onPress={() => this._onGridGamePress(item, index)}
         >
@@ -109,55 +95,52 @@ class HomeScreen extends React.Component {
     }
   };
 
-  _onGridGamePress = (item, index) => {
+  _onGridGamePress = async (item, index) => {
     playSoundAsync();
-    dataArray[index] =
-      dataArray[index] === undefined || dataArray[index] === 0 ? 1 : 0;
-
-    let itemDataObj = {
-      key: item.key,
-      index: index
+    gameGridDatatArray[index] =
+      gameGridDatatArray[index] === undefined || gameGridDatatArray[index] === 0 ? 1 : 0;
+    let newItem = {
+      key: item.key
     };
-
-    this.setState(
-      prevState => ({
-        selectedLetter: [...prevState.selectedLetter, itemDataObj]
-      }),
-      () => {
-        const { wordFound } = strCompare(
-          generateWord(this.state.selectedLetter)
-        );
-        this._updateRemainingWordCount(wordFound);
-      }
-    );
+    await this._setStateAsync({
+      selectedLetter: [...this.state.selectedLetter, newItem]
+    });
+    const { wordFound } = strCompare(generateWord(this.state.selectedLetter));
+    this._updateRemainingWordCount(wordFound);
   };
 
-  _updateRemainingWordCount = wordFound => {
-    const { remainingWord } = this.state;
-    console.log(remainingWord);
-    if (remainingWord >= 0) {
-      this.setState(
-        prevState => ({
-          remainingWord: 6 - wordFound
-        }),
-        () => {
-          if (this.state.remainingWord === 0) {
-            dataArray = new Array(100);
-            this._playAnimation();
-            // this._changeDataGrid();
-          }
-        }
-      );
+  _setStateAsync(state) {
+    return new Promise(resolve => {
+      this.setState(state, resolve);
+    });
+  }
+
+  _updateRemainingWordCount = async wordFound => {
+    if (wordFound === 6) {
+      this._resetGameGridDataArray();
+      await this._setStateAsync(INITIAL_STATE);
+      this._playAnimation();
+      this._changeDataGrid();
+    } else {
+      await this._setStateAsync({ remainingWord: 6 - wordFound });
     }
   };
 
   _changeDataGrid = () => {
-    this.setState({
-      currentGameGrid:
-        this.state.currentGameGrid == first_data_grid
-          ? second_data_grid
-          : first_data_grid
-    });
+    let nextGrid =
+      this.state.currentGameGrid === first_data_grid ? second_data_grid : first_data_grid;
+    this._resetGameGridDataArray();
+    this.setState({ ...INITIAL_STATE, currentGameGrid: nextGrid });
+  };
+
+  _resetGameGridDataArray() {
+    gameGridDatatArray = new Array(100);
+  }
+
+  _reloadDataGrid = () => {
+    let currentGrid = this.state.currentGameGrid;
+    this._resetGameGridDataArray();
+    this.setState({ ...INITIAL_STATE, currentGameGrid: currentGrid });
   };
 
   _keyExtractor = (item, index) => index;
@@ -168,7 +151,7 @@ class HomeScreen extends React.Component {
     } else {
       this.animation.reset();
       this.animation.play();
-      setTimeout(() => this.setState({ animation: null }), 4000);
+      setTimeout(() => this.setState({ animation: null }), 3000);
     }
   };
 
@@ -276,6 +259,9 @@ const styles = StyleSheet.create({
     left: 110,
     right: 0,
     bottom: 25
+  },
+  textColor: {
+    color: "white"
   }
 });
 

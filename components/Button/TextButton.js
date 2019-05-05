@@ -5,19 +5,13 @@ import { Spinner } from "../Spinner/Spinner";
 const TextButton = ({ onPress, buttonStyle, textStyle, loading, ...props }) => {
   if (loading === true) {
     return (
-      <TouchableHighlight
-        onPress={onPress}
-        style={[styles.buttonStyle, buttonStyle]}
-      >
+      <TouchableHighlight onPress={onPress} style={[styles.buttonStyle, buttonStyle]}>
         <Spinner />
       </TouchableHighlight>
     );
   } else {
     return (
-      <TouchableHighlight
-        onPress={onPress}
-        style={[styles.buttonStyle, buttonStyle]}
-      >
+      <TouchableHighlight onPress={onPress} style={[styles.buttonStyle, buttonStyle]}>
         <Text style={[styles.textStyle, textStyle]}>{props.children}</Text>
       </TouchableHighlight>
     );
