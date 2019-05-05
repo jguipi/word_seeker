@@ -4,11 +4,12 @@ import { LinearGradient, WebBrowser } from "expo";
 import themeColor from "../constants/Colors";
 import { TextField } from "../components/Index";
 import i18n from "../helpers/i18n";
-import { sendSMS } from "../helpers/others";
+import { sendSMS, getGamePlayed } from "../helpers/others";
 
 export default class SettingsScreen extends React.Component {
   state = {
-    result: null
+    result: null,
+    gamePlayed: 0
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -24,7 +25,12 @@ export default class SettingsScreen extends React.Component {
     };
   };
 
+  async componentDidMount() {
+    this.setState({ gamePlayed: await getGamePlayed() });
+  }
+
   render() {
+    const { gamePlayed, result } = this.state;
     return (
       <LinearGradient
         colors={[themeColor.secondaryColor, themeColor.thirdColor]}
@@ -32,25 +38,16 @@ export default class SettingsScreen extends React.Component {
       >
         <View style={styles.subContainer}>
           <View style={styles.item}>
-            {this._renderItemContent(
-              i18n.t("language"),
-              i18n.locale,
-              false,
-              this._changeLanguage
-            )}
+            {this._renderItemContent(i18n.t("language"), i18n.locale, false, this._changeLanguage)}
           </View>
           <View style={styles.item}>
-            {this._renderItemContent(i18n.t("game_played"), 6)}
+            {this._renderItemContent(i18n.t("game_played"), gamePlayed)}
           </View>
         </View>
-
         <View style={styles.subContainer}>
           <View style={styles.item}>
-            {this._renderItemContent(
-              i18n.t("invite_a_friend"),
-              i18n.t("git_text"),
-              false,
-              () => sendSMS()
+            {this._renderItemContent(i18n.t("invite_a_friend"), i18n.t("git_text"), false, () =>
+              sendSMS()
             )}
           </View>
           <View style={styles.item}>
@@ -63,9 +60,7 @@ export default class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.subContainer}>
-          <View style={styles.item}>
-            {this._renderItemContent(i18n.t("creator"), "Juste G.")}
-          </View>
+          <View style={styles.item}>{this._renderItemContent(i18n.t("creator"), "Juste G.")}</View>
           <View style={styles.item}>
             {this._renderItemContent(
               i18n.t("made_for"),
@@ -79,9 +74,7 @@ export default class SettingsScreen extends React.Component {
           {this._renderItemContent(i18n.t("version"), "1.0.0", true)}
         </View>
         <View style={{ height: 0 }}>
-          <TextField>
-            {this.state.result && JSON.stringify(this.state.result)}
-          </TextField>
+          <TextField>{result && JSON.stringify(result)}</TextField>
         </View>
       </LinearGradient>
     );
@@ -96,12 +89,7 @@ export default class SettingsScreen extends React.Component {
     this.forceUpdate();
   };
 
-  _renderItemContent = (
-    sectionName,
-    value,
-    lastItem = false,
-    onPress = null
-  ) => {
+  _renderItemContent = (sectionName, value, lastItem = false, onPress = null) => {
     if (lastItem) {
       return (
         <TouchableOpacity style={styles.lastItem} onPress={onPress}>

@@ -8,6 +8,8 @@ import { playSoundAsync } from "../helpers/sounds";
 import { strCompare, generateWord } from "../helpers/strOperation";
 import { LinearGradient, WebBrowser } from "expo";
 import { DangerZone } from "expo";
+import { setSecureItem } from "../helpers/asyncStorage";
+import { updateGamePlayed } from "../helpers/others";
 let { Lottie } = DangerZone;
 
 const COLUMN_NUMBER = 10;
@@ -118,8 +120,9 @@ class HomeScreen extends React.Component {
     if (wordFound === 6) {
       this._resetGameGridDataArray();
       await this._setStateAsync(INITIAL_STATE);
-      this._playAnimation();
       this._changeDataGrid();
+      this._playAnimation();
+      updateGamePlayed();
     } else {
       await this._setStateAsync({ remainingWord: 6 - wordFound });
     }
