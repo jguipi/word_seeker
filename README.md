@@ -6,6 +6,8 @@
   <img src="https://github.com/jguipi/word_seeker/blob/master/exemples/exemple_3.png" width="250" />
 </p>
 
+[![Watch the video](https://img.youtube.com/vi/rGX0KEwYXG4/0.jpg)](https://youtu.be/rGX0KEwYXG4)
+
 ## Getting started
 
 ### Introduction 
