@@ -5,10 +5,9 @@ import { TextField, FloatingActionButton } from "../components/Index";
 import themeColor from "../constants/Colors";
 import i18n from "../helpers/i18n";
 import { playSoundAsync } from "../helpers/sounds";
-import { strCompare, generateWord, verifyGameGridWord } from "../helpers/gameOperation";
+import { verifyGameGridWord } from "../helpers/gameOperation";
 import { LinearGradient, WebBrowser } from "expo";
 import { DangerZone } from "expo";
-import { setSecureItem } from "../helpers/asyncStorage";
 import { updateGamePlayed } from "../helpers/others";
 let { Lottie } = DangerZone;
 
