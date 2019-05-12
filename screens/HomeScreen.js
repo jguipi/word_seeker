@@ -5,7 +5,7 @@ import { TextField, FloatingActionButton } from "../components/Index";
 import themeColor from "../constants/Colors";
 import i18n from "../helpers/i18n";
 import { playSoundAsync } from "../helpers/sounds";
-import { strCompare, generateWord } from "../helpers/strOperation";
+import { strCompare, generateWord, verifyGameGridWord } from "../helpers/gameOperation";
 import { LinearGradient, WebBrowser } from "expo";
 import { DangerZone } from "expo";
 import { setSecureItem } from "../helpers/asyncStorage";
@@ -14,9 +14,10 @@ let { Lottie } = DangerZone;
 
 const COLUMN_NUMBER = 10;
 var gameGridDatatArray = new Array(100);
+
 const INITIAL_STATE = {
   currentGameGrid: first_data_grid,
-  remainingWord: 6,
+  remainingWord: verifyGameGridWord(gameGridDatatArray),
   selectedLetter: [],
   animation: null
 };
@@ -106,8 +107,9 @@ class HomeScreen extends React.Component {
     await this._setStateAsync({
       selectedLetter: [...this.state.selectedLetter, newItem]
     });
-    const { wordFound } = strCompare(generateWord(this.state.selectedLetter));
-    this._updateRemainingWordCount(wordFound);
+    this._updateRemainingWordCount(
+      verifyGameGridWord(gameGridDatatArray, this.state.currentGameGrid)
+    );
   };
 
   _setStateAsync(state) {
@@ -116,15 +118,15 @@ class HomeScreen extends React.Component {
     });
   }
 
-  _updateRemainingWordCount = async wordFound => {
-    if (wordFound === 6) {
+  _updateRemainingWordCount = async remainingWord => {
+    if (remainingWord === 0) {
       this._resetGameGridDataArray();
       await this._setStateAsync(INITIAL_STATE);
       this._changeDataGrid();
       this._playAnimation();
       updateGamePlayed();
     } else {
-      await this._setStateAsync({ remainingWord: 6 - wordFound });
+      await this._setStateAsync({ remainingWord });
     }
   };
 
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     margin: 1,
-    height: Dimensions.get("window").width / COLUMN_NUMBER // approximate a square
+    height: Dimensions.get("window").width / COLUMN_NUMBER
   },
   animationDimension: {
     width: 200,
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     margin: 1,
-    height: Dimensions.get("window").width / COLUMN_NUMBER // approximate a square
+    height: Dimensions.get("window").width / COLUMN_NUMBER
   },
   itemInvisible: {
     backgroundColor: "transparent"
