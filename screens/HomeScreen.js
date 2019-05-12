@@ -17,7 +17,7 @@ var gameGridDatatArray = new Array(100);
 
 const INITIAL_STATE = {
   currentGameGrid: first_data_grid,
-  remainingWord: verifyGameGridWord(gameGridDatatArray),
+  remainingWord: verifyGameGridWord(gameGridDatatArray, first_data_grid),
   selectedLetter: [],
   animation: null
 };
