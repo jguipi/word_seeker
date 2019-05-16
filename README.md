@@ -77,7 +77,9 @@ This README file will guide you through simple steps to help you start this app.
 - [x] Change level
 - [x] Invite a friend by sms
 
+### Tested on
 
+- [x] iPhone 8 plus
 
 ### Usefull VS code plugins
 - Color highlight
